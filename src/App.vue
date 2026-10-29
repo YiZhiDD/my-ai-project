@@ -1,4 +1,4 @@
-<!--
+"<!--
   途笺 · WAYFARER — AI 旅行计划生成器
   Vue3 + Vite + Element Plus + DeepSeek Chat Completions
   依赖：element-plus（main.js 全局注册即可，无需 icons 包）
@@ -129,6 +129,7 @@
           </div>
         </div>
 
+<ChinaMap />
         <!-- 结果卡片 -->
         <section class="card result-card" ref="resultCard">
           <div class="result-head">
@@ -248,6 +249,7 @@
     </el-dialog>
   </div>
 </template>
+import ChinaMap from './components/ChinaMap.vue'
 
 <script setup>
 import { ref, reactive, computed, onBeforeUnmount, nextTick } from 'vue'
@@ -589,7 +591,9 @@ const renderedPlan = computed(() => renderMarkdown(planContent.value))
 
 <!-- 全局：Element Plus 主题 + 字体 + 纸张质感 -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap');
+@import url('
+https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap
+');
 
 :root {
   /* Element Plus 品牌化 */
@@ -636,7 +640,9 @@ body::before {
   pointer-events: none;
   z-index: 9999;
   opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='
+http://www.w3.org/2000/svg
+' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 ::selection {
   background: var(--teal);
