@@ -1,4 +1,4 @@
-"<!--
+<!--
   途笺 · WAYFARER — AI 旅行计划生成器
   Vue3 + Vite + Element Plus + DeepSeek Chat Completions
   依赖：element-plus（main.js 全局注册即可，无需 icons 包）
@@ -19,6 +19,7 @@
             <em>WAYFARER · AI TRIP STUDIO</em>
           </span>
         </a>
+       
 
         <div class="search">
           <el-input
@@ -65,6 +66,7 @@
         <span class="tabs-hint mono">CURRENT · {{ currentTabLabel }}</span>
       </nav>
     </header>
+
 
     <!-- ============ 主体 ============ -->
     <main class="stage">
@@ -129,7 +131,7 @@
           </div>
         </div>
 
-<ChinaMap />
+<!<ChinaMap />
         <!-- 结果卡片 -->
         <section class="card result-card" ref="resultCard">
           <div class="result-head">
@@ -143,7 +145,7 @@
               <span v-if="elapsed" class="meta-chip mono">耗时 {{ elapsed }}s</span>
               <button v-if="planContent" type="button" class="ghost-btn" @click="copyPlan">复制</button>
               <button v-if="planContent" type="button" class="ghost-btn" @click="resetPlan">清空</button>
-            </div>
+            </div>>
           </div>
 
           <div class="result-body">
@@ -190,6 +192,13 @@
           </div>
         </section>
       </section>
+      <!-- 2. 智能化推荐页面 -->
+    <section v-if="activeTab === 'rec'" class="panel" style="padding: 100px 20px; text-align: center;">
+      <h1>📍 智能化推荐</h1>
+      <p style="color: #666;">（地图区域，等待拼装）</p >
+    </section>
+
+
 
       <!-- ---- 智能化推荐（占位） ---- -->
       <section v-else-if="activeTab === 'rec'" class="panel">
@@ -213,7 +222,7 @@
       </section>
 
       <!-- ---- 设置（占位） ---- -->
-      <section v-else class="panel">
+     <section v-if="activeTab === 'settings'" class="panel">
         <div class="panel-head">
           <span class="eyebrow mono">STEP 03 — PREFERENCES</span>
           <h1>设置</h1>
@@ -228,6 +237,16 @@
             <el-switch v-model="s.value" :disabled="s.disabled" />
           </div>
         </div>
+      </section>
+       <!-- 3. 设置页面 -->
+    <section v-if="activeTab === 'settings'" class="panel" style="padding: 100px 20px; text-align: center;">
+      <h1>⚙️ 个人设置</h1>
+      <p style="color: #666;">（个人信息区域，等待拼装）</p >
+    </section>
+   
+   <!-- 4. 旅行组队论坛 -->
+      <section v-if="activeTab === 'team'" class="panel" style="padding: 20px;">
+       <TeamForum />
       </section>
     </main>
 
@@ -249,17 +268,20 @@
     </el-dialog>
   </div>
 </template>
-import ChinaMap from './components/ChinaMap.vue'
+
 
 <script setup>
 import { ref, reactive, computed, onBeforeUnmount, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
+import TeamForum from './components/TeamForum.vue'
+
 
 /* ---------------- 基础状态 ---------------- */
 const tabs = [
   { key: 'rec', idx: '01', label: '智能化推荐' },
   { key: 'plan', idx: '02', label: '计划制定' },
-  { key: 'settings', idx: '03', label: '设置' },
+  { key: 'team', idx: '03', label: '旅行组队' },
+  { key: 'settings', idx: '04', label: '设置' },
 ]
 const activeTab = ref('plan') // 默认选中「计划制定」
 const currentTabLabel = computed(() => tabs.find(t => t.key === activeTab.value)?.label ?? '')
@@ -295,7 +317,7 @@ const fakeRecs = [
   { name: '敦煌 · 河西走廊', desc: '莫高窟、鸣沙山与雅丹地貌，一条线路读懂千年。', tags: ['人文', '自驾', '5–6天'], tone: 'tone-c' },
 ]
 const fakeSettings = reactive([
-  { key: 'pace', label: '偏好节奏', desc: '轻松漫游 / 标准紧凑 /特种兵暴走', value: true, disabled: false },
+  { key: 'pace', label: '节奏', desc: '轻松漫游 / 标准紧凑 /特种兵暴走', value: true, disabled: false },
   { key: 'budget', label: '优先经济型方案', desc: '优先推荐性价比交通与住宿', value: false, disabled: false },
   { key: 'map', label: '启用中国地图可视化', desc: '功能开发中，敬请期待', value: false, disabled: true },
   { key: 'notify', label: '行程变更提醒', desc: '功能开发中，敬请期待', value: false, disabled: true },
