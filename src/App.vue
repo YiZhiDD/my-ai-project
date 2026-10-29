@@ -15,7 +15,7 @@
 
 <script setup>
 import { ref } from 'vue'
-
+import spotsData from './data/spots.json'
 const loading = ref(false)
 const reply = ref('')
 const error = ref('')
