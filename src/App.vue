@@ -193,56 +193,20 @@
         </section>
       </section>
       <!-- 2. 智能化推荐页面 -->
-    <section v-if="activeTab === 'rec'" class="panel" style="padding: 100px 20px; text-align: center;">
-      <h1>📍 智能化推荐</h1>
-      <p style="color: #666;">（地图区域，等待拼装）</p >
-    </section>
+    <!-- 2. 智能化推荐页面 -->
+<section v-if="activeTab === 'rec'" class="panel">
+ <div style="width: 100%; height: 800px; position: relative; background-color: pink;">
+    <TestPage />
+  </div>
+</section>
 
 
-
-      <!-- ---- 智能化推荐（占位） ---- -->
-      <section v-else-if="activeTab === 'rec'" class="panel">
-        <div class="panel-head">
-          <span class="eyebrow mono">STEP 02 — RECOMMEND</span>
-          <h1>智能化推荐</h1>
-          <p class="lede">基于你的偏好与足迹推荐目的地。功能开发中，以下为占位假数据。</p>
-        </div>
-        <div class="rec-grid">
-          <article v-for="(r, i) in fakeRecs" :key="r.name" class="rec-card" :style="{ '--i': i }">
-            <div class="rec-cover" :class="r.tone"></div>
-            <div class="rec-info">
-              <h3>{{ r.name }}</h3>
-              <p>{{ r.desc }}</p>
-              <div class="rec-tags">
-                <span v-for="t in r.tags" :key="t">{{ t }}</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ---- 设置（占位） ---- -->
-     <section v-if="activeTab === 'settings'" class="panel">
-        <div class="panel-head">
-          <span class="eyebrow mono">STEP 03 — PREFERENCES</span>
-          <h1>设置</h1>
-          <p class="lede">调整出行偏好，让生成结果更贴合你。当前为演示开关，暂未持久化。</p>
-        </div>
-        <div class="card settings-card">
-          <div v-for="s in fakeSettings" :key="s.key" class="setting-row">
-            <div>
-              <h4>{{ s.label }}</h4>
-              <p>{{ s.desc }}</p>
-            </div>
-            <el-switch v-model="s.value" :disabled="s.disabled" />
-          </div>
-        </div>
-      </section>
+     
        <!-- 3. 设置页面 -->
-    <section v-if="activeTab === 'settings'" class="panel" style="padding: 100px 20px; text-align: center;">
-      <h1>⚙️ 个人设置</h1>
-      <p style="color: #666;">（个人信息区域，等待拼装）</p >
-    </section>
+    <section v-if="activeTab === 'settings'" class="panel" style="padding: 20px;">
+  <Profile />
+
+</section>
    
    <!-- 4. 旅行组队论坛 -->
       <section v-if="activeTab === 'team'" class="panel" style="padding: 20px;">
@@ -274,14 +238,15 @@
 import { ref, reactive, computed, onBeforeUnmount, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import TeamForum from './components/TeamForum.vue'
-
+import Profile from './components/settings.vue'
+import TestPage from './components/TestPage.vue'
 
 /* ---------------- 基础状态 ---------------- */
 const tabs = [
   { key: 'rec', idx: '01', label: '智能化推荐' },
   { key: 'plan', idx: '02', label: '计划制定' },
   { key: 'team', idx: '03', label: '旅行组队' },
-  { key: 'settings', idx: '04', label: '设置' },
+  { key: 'settings', idx: '04', label: '个人中心' },
 ]
 const activeTab = ref('plan') // 默认选中「计划制定」
 const currentTabLabel = computed(() => tabs.find(t => t.key === activeTab.value)?.label ?? '')
@@ -362,7 +327,7 @@ async function copyPlan() {
 const API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY || ''
 const SYSTEM_PROMPT =
   '你是一位经验丰富的中国旅行规划师。请用简体中文输出结构清晰的行程方案，' +
-  '使用 Markdown 格式：包含行程概览、逐日安排（Day 1/Day 2…）、交通方式、打卡地点、住宿推荐、预算参考与注意事项。' +
+  '使用 Markdown 格式:包含行程概览、逐日安排(Day 1/Day 2…)、交通方式、打卡地点、住宿推荐、预算参考与注意事项。' +
   '内容要具体、可执行，避免空话。'
 
 const thinkingStep = ref('正在理解你的出行需求…')
@@ -613,9 +578,7 @@ const renderedPlan = computed(() => renderMarkdown(planContent.value))
 
 <!-- 全局：Element Plus 主题 + 字体 + 纸张质感 -->
 <style>
-@import url('
-https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap
-');
+
 
 :root {
   /* Element Plus 品牌化 */
@@ -682,21 +645,17 @@ http://www.w3.org/2000/svg
   box-sizing: border-box;
 }
 .app-shell {
+  background-color: #ffffff; /* 纯白底色 */
   min-height: 100vh;
-  background:
-    radial-gradient(60rem 40rem at 88% -8%, rgba(14, 79, 71, 0.09), transparent 60%),
-    radial-gradient(50rem 34rem at 4% 12%, rgba(217, 142, 74, 0.1), transparent 55%),
-    var(--paper);
 }
-
 /* ---------- 顶栏 ---------- */
 .topbar {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(14px);
-  background: rgba(246, 241, 232, 0.82);
-  border-bottom: 1px solid var(--line);
+  background: #ffffff; /* 纯白 */
+  border-bottom: 1px solid #eeeeee; /* 用极浅的灰色画一条线，区分顶栏和下面 */
+ 
 }
 .topbar-inner {
   max-width: 1180px;
@@ -1427,6 +1386,18 @@ http://www.w3.org/2000/svg
   }
   .tabs-hint {
     display: none;
-  }
+  } 
+  /* 给整个页面加一层带有光晕的背景 */
+.app-shell {
+  position: relative;
+  background-color: var(--paper); /* 保留你原来的米色 */
+  overflow: hidden; /* 防止光晕撑破屏幕 */
+}
+
+
+.topbar, .stage {
+  position: relative;
+  z-index: 1;
+}
 }
 </style>
