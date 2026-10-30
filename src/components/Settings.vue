@@ -19,6 +19,15 @@
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
         我的关注
       </div>
+      <!-- 新增的设置菜单 -->
+        <div :class="['menu-item', { active: activeTab === 'settings' }]" @click="activeTab = 'settings'">
+        <!-- 齿轮图标 SVG -->
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        设置
+</div>
     </div>
 
     <!-- 右侧内容区 -->
@@ -96,7 +105,8 @@
         <div v-if="activeTab === 'favorites'" class="panel" style="display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%; padding-top: 40px;">
         
         <!-- 这里去掉了 border-bottom，去掉了那条短线 -->
-        <div class="panel-header" style="width: 100%; text-align: left; margin-bottom: 20px;">
+        <div class="panel-header" style="width: 100%; text-align: left;     
+         margin-bottom: 20px;">
             <h2 style="margin: 0;">我的关注</h2>
         </div>
         
@@ -108,6 +118,67 @@
                 <span style="font-size: 18px;">❤️</span> 
                 <span>{{ item }}</span>
                 </div>
+            </div>
+        </div>
+    <!-- 4. 设置模块 -->
+        <div v-if="activeTab === 'settings'" class="panel" style="display: flex; flex-direction: column; width: 100%; padding: 60px 20px; box-sizing: border-box;">
+        
+            <!-- 标题，和上面统一 -->
+            <div class="panel-header" style="width: 100%; text-align: left; margin-bottom: 40px;">
+                <h2 style="margin: 0;">设置</h2>
+            </div>
+
+            <!-- 设置列表容器，拉开上下间距 -->
+            <div style="display: flex; flex-direction: column; gap: 45px; width: 100%;">
+                
+                <!-- 节奏 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <div style="font-size: 16px; font-weight: bold; color: #1e293b;">节奏</div>
+                        <div style="font-size: 14px; color: #94a3b8;">轻松漫游 / 标准紧凑 / 特种兵暴走</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" v-model="settingPace" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <!-- 优先经济型方案 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <div style="font-size: 16px; font-weight: bold; color: #1e293b;">优先经济型方案</div>
+                        <div style="font-size: 14px; color: #94a3b8;">优先推荐性价比交通与住宿</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" v-model="settingEconomy" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <!-- 启用中国地图可视化 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                    <div style="font-size: 16px; font-weight: bold; color: #1e293b;">启用中国地图可视化</div>
+                    <div style="font-size: 14px; color: #94a3b8;">功能开发中，敬请期待</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" disabled />
+                    <span class="slider round"></span>
+                </label>
+                </div>
+
+                <!-- 行程变更提醒 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <div style="font-size: 16px; font-weight: bold; color: #1e293b;">行程变更提醒</div>
+                        <div style="font-size: 14px; color: #94a3b8;">功能开发中，敬请期待</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" disabled />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
             </div>
         </div>
     </div>
@@ -629,5 +700,56 @@ const showFootprintPhotos = (place) => {
     .upload-btn-small:hover {
     background: #e0f2fe;
     border-color: #0284c7;
+    }
+    /* --- 开关按钮核心样式 --- */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    flex-shrink: 0;
+    }
+
+    .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #cbd5e1; /* 关闭时的灰色 */
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+    background-color: #3b82f6; /* 开启时的蓝色 */
+    }
+
+    input:checked + .slider:before {
+    transform: translateX(24px);
+    }
+
+    /* 圆角样式 */
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
     }
 </style>
