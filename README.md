@@ -1,5 +1,38 @@
-# Vue 3 + Vite
+# 途笺 WAYFARER - AI 旅行计划生成器
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 📖 项目介绍
+基于 Vue3 + Vite + DeepSeek 大模型的 AI 旅游 Web 应用。解决用户“做攻略难”的痛点，提供 AI 个性化行程制定、旅行组队论坛、个人足迹地图等核心功能。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 🌟 核心功能
+本项目包含四大核心模块：
+1. **🤖 计划制定**：用户输入出发地、目的地与天数，AI 自动生成包含交通、住宿、打卡点的逐日行程，支持 Markdown 实时渲染。
+2. **📍 智能化推荐**：提供可视化的地图交互界面，点击省份可查看当地热门景点打卡相册。
+3. **🤝 旅行组队（论坛）**：支持用户发布/删除组队贴，寻找同频的旅行搭子（基于 LocalStorage 实现数据持久化）。
+4. **👤 个人中心**：包含个人信息修改、个人相册以及足迹地图（通过红点标识打卡足迹）。
+
+## 💡 项目创新点（赛题核心）
+- **应用创新**：将“AI 行程生成”与“社交组队找搭子”结合，解决单人旅行痛点，打造旅游社交闭环。
+- **技术创新**：采用 **Vite Proxy 代理** 技术中转大模型请求，将敏感的 API Key 隐藏于本地环境变量（`.env.local`）中，彻底杜绝前端密钥泄露风险，体现“负责任 AI”的设计理念。
+- **交互创新**：结合 ECharts 实现地图足迹点亮，给予用户极强的打卡成就感。
+
+## 🛠️ 技术架构
+- 前端：Vue3 (Composition API) + Element Plus + ECharts
+- AI 接入：DeepSeek API (通过 Vite Proxy 代理防泄露)
+- 部署：Vercel (或待定)
+
+## 🚀 安装运行指南
+1. 克隆项目：`git clone https://github.com/YiZhiDD/my-ai-project.git`
+2. 安装依赖：`npm install`
+3. 配置环境变量：在根目录新建 `.env.local`，填入 `VITE_DEEPSEEK_KEY=`
+4. 启动项目：`npm run dev`
+
+🌐 在线体验地址
+演示地址：https://your-project.vercel.app
+
+## 👥 团队信息
+- 队长（前端主程 & AI 接入）：彭熙蓉
+- 前端（地图/UI/论坛）：郭议韩
+- 文档与测试：刘晓晗
+
+
+本项目伟传智杯参赛原创作品，请大家尊重我们的劳动成果，严禁抄袭
